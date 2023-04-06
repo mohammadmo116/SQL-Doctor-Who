@@ -179,6 +179,22 @@ INNER JOIN tblAuthor A
 ON E.AuthorId =A.AuthorId ;
 
 
+--------------------TASK9
+CREATE PROCEDURE spSummariseEpisodes
+AS
+SELECT TOP 3 E.Title, count(EC.EpisodCompanionId) As CompanionsCount
+FROM tblEpisodCompanion EC
+INNER JOIN tblEpisod E
+ON E.EpisodId= EC.EpisodId
+GROUP BY E.Title
+ORDER BY CompanionsCount DESC 
+
+SELECT TOP 3 E.Title, COUNT(EE.EnemyId) AS EnemiesCount
+FROM tblEpisodEnemy EE
+INNER JOIN tblEpisod E 
+ON EE.EpisodId = E.EpisodId 
+GROUP BY E.Title
+ORDER BY EnemiesCount DESC 
 
 
-
+EXEC spSummariseEpisodes
