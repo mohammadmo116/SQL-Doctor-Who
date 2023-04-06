@@ -167,3 +167,18 @@ END;
 SELECT dbo.fnEnemies(4) as Enemies;
 
 
+/////////////////////TASK8
+CREATE VIEW viewEpisodes 
+AS
+SELECT A.AuthorName ,D.DoctorName  ,dbo.fnCompanions(E.EpisodId) As CompanionName,
+dbo.fnEnemies(E.EpisodId) As EnemiesName, E.*
+FROM tblEpisod E
+INNER JOIN tblDoctor D
+ON E.DoctorId=D.DoctorId 
+INNER JOIN tblAuthor A 
+ON E.AuthorId =A.AuthorId ;
+
+
+
+
+
