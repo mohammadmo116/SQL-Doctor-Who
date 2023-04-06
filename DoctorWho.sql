@@ -1,4 +1,4 @@
-/////////////////////TASK1
+--------------------TASK1
 USE master;
 DROP DATABASE DoctorWho;
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DoctorWho')
@@ -7,7 +7,7 @@ BEGIN
 END;
 use DoctorWho;
 
-/////////////////////TASK2
+--------------------TASK2
 CREATE TABLE tblEnemy (
     EnemyId int primary key,
     EnemyName varchar(255),
@@ -58,7 +58,7 @@ CREATE TABLE tblEpisodCompanion(
 	CompanionId int FOREIGN KEY REFERENCES tblCompanion(CompanionId),
 );
 
-/////////////////////TASK3
+--------------------TASK3
 insert into tblEnemy(EnemyId,EnemyName,Description)values(1,'pain','destroy the word');
 insert into tblEnemy(EnemyId,EnemyName,Description)values(2,'obito','waking madara up');
 insert into tblEnemy(EnemyId,EnemyName,Description)values(3,'Madara','tsokoyome');
@@ -116,20 +116,20 @@ insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(3,3
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(4,4,1);
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(5,5,2);
 
-/////////////////////TASK4
+--------------------TASK4
 update tblEpisod set DoctorId=NULL
 where EpisodId=5;
 
 update tblEpisod set Title=concat(Title,'_Cancled')
 where DoctorId IS NULL;
 
-/////////////////////TASK5
+--------------------TASK5
 DELETE FROM  tblEpisodCompanion WHERE EpisodCompanionId=5;
 
 DELETE FROM tblCompanion WHERE CompanionId NOT IN (
 SELECT CompanionId from tblEpisodCompanion);
 
-/////////////////////TASK6
+--------------------TASK6
 UPDATE tblEpisodCompanion SET EpisodId=4 WHERE CompanionId=3;
 
 CREATE FUNCTION dbo.fnCompanions (@EpisodeId int)
@@ -147,7 +147,7 @@ END;
 
 SELECT dbo.fnCompanions(4) AS Companions;
 
-/////////////////////TASK7
+--------------------TASK7
 UPDATE tblEpisodEnemy SET EpisodId=4 WHERE EnemyId=3;
 
 
@@ -167,7 +167,7 @@ END;
 SELECT dbo.fnEnemies(4) as Enemies;
 
 
-/////////////////////TASK8
+--------------------TASK8
 CREATE VIEW viewEpisodes 
 AS
 SELECT A.AuthorName ,D.DoctorName  ,dbo.fnCompanions(E.EpisodId) As CompanionName,
