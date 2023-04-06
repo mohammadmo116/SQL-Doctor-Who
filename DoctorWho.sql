@@ -140,7 +140,8 @@ set @return_value=(
 SELECT STRING_AGG(C.CompanionName,', ') WITHIN GROUP (ORDER BY  C.CompanionName DESC)
 FROM  tblCompanion C
 INNER JOIN tblEpisodCompanion EC
-ON EC.CompanionId = C.CompanionId where EC.EpisodId=4)
+ON EC.CompanionId = C.CompanionId 
+where EC.EpisodId=@EpisodeId)
  RETURN @return_value
 END;
 
