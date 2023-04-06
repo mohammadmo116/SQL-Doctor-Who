@@ -1,12 +1,13 @@
+/////////////////////TASK1
 USE master;
 DROP DATABASE DoctorWho;
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DoctorWho')
 BEGIN
   CREATE DATABASE DoctorWho;
 END;
-
 use DoctorWho;
 
+/////////////////////TASK2
 CREATE TABLE tblEnemy (
     EnemyId int primary key,
     EnemyName varchar(255),
@@ -57,8 +58,7 @@ CREATE TABLE tblEpisodCompanion(
 	CompanionId int FOREIGN KEY REFERENCES tblCompanion(CompanionId),
 );
 
-///////////////
-
+/////////////////////TASK3
 insert into tblEnemy(EnemyId,EnemyName,Description)values(1,'pain','destroy the word');
 insert into tblEnemy(EnemyId,EnemyName,Description)values(2,'obito','waking madara up');
 insert into tblEnemy(EnemyId,EnemyName,Description)values(3,'Madara','tsokoyome');
@@ -116,13 +116,37 @@ insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(3,3
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(4,4,1);
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(5,5,2);
 
-
+/////////////////////TASK4
 update tblEpisod set DoctorId=NULL
 where EpisodId=5;
+
 update tblEpisod set Title=concat(Title,'_Cancled')
 where DoctorId IS NULL;
 
+/////////////////////TASK5
 DELETE FROM  tblEpisodCompanion WHERE EpisodCompanionId=5;
+
 DELETE FROM tblCompanion WHERE CompanionId NOT IN (
 SELECT CompanionId from tblEpisodCompanion)
+
+/////////////////////TASK6
+UPDATE tblEpisodCompanion SET EpisodId=4 WHERE EpisodCompanionId=3;
+
+CREATE FUNCTION dbo.fnCompanions (@EpisodeId int)
+RETURNS TABLE AS
+RETURN (
+SELECT C.CompanionName
+FROM  tblCompanion C
+INNER JOIN tblEpisodCompanion EC
+ON EC.CompanionId = C.CompanionId where EC.EpisodId=@EpisodeId)
+
+DECLARE re @val Varchar(5000)
+SELECT @val=COALESCE(@val+', '+C.CompanionName,+C.CompanionName) 
+       FROM  tblCompanion C
+INNER JOIN tblEpisodCompanion EC
+ON EC.CompanionId = C.CompanionId where EC.EpisodId=4
+SELECT @val as CompanionNames
+
+
+
 
