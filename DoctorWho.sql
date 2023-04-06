@@ -127,26 +127,42 @@ where DoctorId IS NULL;
 DELETE FROM  tblEpisodCompanion WHERE EpisodCompanionId=5;
 
 DELETE FROM tblCompanion WHERE CompanionId NOT IN (
-SELECT CompanionId from tblEpisodCompanion)
+SELECT CompanionId from tblEpisodCompanion);
 
 /////////////////////TASK6
-UPDATE tblEpisodCompanion SET EpisodId=4 WHERE EpisodCompanionId=3;
+UPDATE tblEpisodCompanion SET EpisodId=4 WHERE CompanionId=3;
 
 CREATE FUNCTION dbo.fnCompanions (@EpisodeId int)
-RETURNS TABLE AS
-RETURN (
-SELECT C.CompanionName
+RETURNS varchar(MAX) AS
+BEGIN
+DECLARE @return_value varchar(MAX)
+set @return_value=(
+SELECT STRING_AGG(C.CompanionName,', ') WITHIN GROUP (ORDER BY  C.CompanionName DESC)
 FROM  tblCompanion C
 INNER JOIN tblEpisodCompanion EC
-ON EC.CompanionId = C.CompanionId where EC.EpisodId=@EpisodeId)
+ON EC.CompanionId = C.CompanionId where EC.EpisodId=4)
+ RETURN @return_value
+END;
 
-DECLARE re @val Varchar(5000)
-SELECT @val=COALESCE(@val+', '+C.CompanionName,+C.CompanionName) 
-       FROM  tblCompanion C
-INNER JOIN tblEpisodCompanion EC
-ON EC.CompanionId = C.CompanionId where EC.EpisodId=4
-SELECT @val as CompanionNames
+SELECT dbo.fnCompanions(4) AS Companions;
+
+/////////////////////TASK7
+UPDATE tblEpisodEnemy SET EpisodId=4 WHERE EnemyId=3;
 
 
+CREATE FUNCTION dbo.fnEnemies (@EpisodeId int)
+RETURNS varchar(MAX) AS
+BEGIN
+DECLARE @return_value varchar(MAX);
+set @return_value =  (
+SELECT STRING_AGG(E.EnemyName,', ') WITHIN GROUP (ORDER BY  E.EnemyName ASC)
+FROM  tblEnemy E
+INNER JOIN tblEpisodEnemy EE
+ON EE.EnemyId = E.EnemyId
+where EE.EpisodId=@EpisodeId)
+    RETURN @return_value
+END;
+
+SELECT dbo.fnEnemies(4) as Enemies;
 
 
