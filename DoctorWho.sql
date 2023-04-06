@@ -82,8 +82,6 @@ values(4,'kakashi',2,'2006-5-5','2013-1-12','2020-2-6');
 insert into tblDoctor(DoctorId,DoctorName,DoctorNumber,BirthDate,FirstEpisodDate,LastEpisodDate)
 values(5,'shikamaro',3,'2008-6-7','2012-1-12','2022-2-10');
 
-
-
 insert into tblEpisod(EpisodId,AuthorId,DoctorId,EpisodDate,EpisodNumber,EpisodType,Notes,SeriesNumber,Title
 )values(1,1,1,'2020-1-1',1,'a','ddd',2,'vv');
 
@@ -100,7 +98,6 @@ insert into tblEpisod(EpisodId,AuthorId,DoctorId,EpisodDate,EpisodNumber,EpisodT
 )values(5,4,4,'2005-10-1',5,'f','dsfdsf',5,'ddas');
 
 
-
 insert into tblEpisodEnemy(EpisodEnemyId,EnemyId,EpisodId)values(1,1,2);
 insert into tblEpisodEnemy(EpisodEnemyId,EnemyId,EpisodId)values(2,3,3);
 insert into tblEpisodEnemy(EpisodEnemyId,EnemyId,EpisodId)values(3,2,4);
@@ -113,11 +110,15 @@ insert into tblCompanion(CompanionId,CompanionName,WhoPlayed) Values(3,'c3','p3'
 insert into tblCompanion(CompanionId,CompanionName,WhoPlayed) Values(4,'c4','p4');
 insert into tblCompanion(CompanionId,CompanionName,WhoPlayed) Values(5,'c5','p5');
 
-
-
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(1,1,4);
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(2,2,5);
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(3,3,3);
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(4,4,1);
 insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(5,5,2);
+
+
+update tblEpisod set DoctorId=NULL
+where EpisodId=5;
+update tblEpisod set Title=concat(tblEpisod.Title,'_Cancled')
+where DoctorId IS NULL;;
 
