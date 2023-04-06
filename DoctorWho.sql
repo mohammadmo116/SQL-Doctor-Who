@@ -120,5 +120,9 @@ insert into tblEpisodCompanion(EpisodCompanionId,CompanionId,EpisodId)values(5,5
 update tblEpisod set DoctorId=NULL
 where EpisodId=5;
 update tblEpisod set Title=concat(Title,'_Cancled')
-where DoctorId IS NULL;;
+where DoctorId IS NULL;
+
+DELETE FROM  tblEpisodCompanion WHERE EpisodCompanionId=5;
+DELETE FROM tblCompanion WHERE CompanionId NOT IN (
+SELECT CompanionId from tblEpisodCompanion)
 
